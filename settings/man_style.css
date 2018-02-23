@@ -1,0 +1,186 @@
+﻿
+
+.bt{ /*button styling*/
+	width: 40px;
+	height: 16px; 
+	border: gray ;
+	font-family:verdana,arial,helvetica,sans-serif;
+	font-size:10px;
+	color: #333333;
+	background-color: #FFCC99;
+}
+
+input[type="button"]:hover {
+ background: #FCF4C9;
+}
+
+input[type="submit"]:hover {
+ background: #FCF4C9;
+}
+
+a {
+text-decoration:none;
+cursor: default;
+color:navy;
+}
+
+a:hover{
+	text-decoration:underline;
+	color:teal;
+}
+
+.i{
+	font-family:verdana,arial,helvetica,sans-serif;
+	font-size:10px;
+	background-color:  #FFFFE0;
+	height: 20px;
+}
+
+
+#myTable2 td{
+	behavior: url('settings/IEFixes.htc'); /* active styling fo IE*/
+}
+
+
+#myTable1 td{
+	behavior: url('settings/IEFixes.htc'); /* active styling fo IE*/
+}
+
+
+#myTable2 tr{
+	behavior: url('settings/IEFixes.htc'); /* active styling fo IE*/
+}
+
+
+#myTable1 tr{
+	behavior: url('settings/IEFixes.htc'); /* active styling fo IE*/
+}
+
+/*tr{
+	behavior: url('settings/IEFixes.htc'); /* active styling fo IE*/
+}*/
+
+#ad{
+	margin-top:30px;
+	}
+
+img{
+	border:0px;
+}
+
+td {
+	height:18px;
+}
+
+tr {
+	font-size:10px;
+	padding-left:5px;
+	padding-right:5px;
+	height:18px;
+}
+
+#myTable2 tr.hover{
+	background-color:#FFEC9F;	
+}
+
+#myTable1 tr.hover{
+	background-color:#FFEC9F;	
+}
+
+#myTable2 tr:hover{
+	background-color:#FFEC9F;	
+}
+
+
+#myTable1 tr:hover{
+	background-color:#FFEC9F;	
+}
+
+
+h1{
+	font-size:9px;
+	}
+
+strong{
+	color:red;
+	text-align:left;
+	}
+
+body{
+	margin:0px;
+	padding:0px;
+	background-image: url('../img/bg.jpg');
+	background-repeat:repeat;
+	font-family:verdana,arial,helvetica,sans-serif;
+	font-size:9px;
+	scrollbar-base-color: lightyellow;
+	scrollbar-arrow-color: black; 
+	scrollbar-DarkShadow-Color: lightyellow;
+}
+	
+#det_ftp_table{
+	table-layout:auto;
+	background-color: #FFFFF4;
+}
+	
+#ad_ftp{
+	table-layout:auto;
+	background-color: #FFFFF4;
+}
+	
+#myTable2{
+	table-layout:auto;
+	background-color: #FFFFF4;
+}
+	
+#myTable1{
+	table-layout:auto;
+	background-color: #FFFFF4;
+}
+	
+h1{
+	margin-left:9px;
+}
+
+p{
+	margin-left:120px;
+	height: 11px;
+	margin-bottom:0px;
+	margin-top:0px;
+}
+
+#ad{
+	margin-left:9px;
+}
+
+#ad_ftp td{
+	text-align:center;
+}
+
+td.hover{
+	background-color:#FFEC9F;
+}
+
+table thead td:hover{
+	background-color:#FFEC9F;
+}
+
+table thead td.hover{
+	background-color:#FFEC9F;
+}
+
+table thead td{
+	padding-left:5px;
+	padding-right:5px;
+	text-align:center;
+ 	background-color: #FFCC99;/*  #CCCC00;	*/
+	font-size:10px;
+	font-weight:bold;
+	cursor:default;
+}
+	
+/* If you wish to highlight current sortable column, add layout effects below */
+.highlightedColumn{
+	background-color: #FFFFE0;
+}
+

@@ -1,0 +1,3 @@
+ftp://Upload:1@147.228.41.84:59995	SSL		UGC	Mirror Fill	
+ftp://suck:o@157.181.43.183:58022			UGC	Mirror Fill	22-03-2008
+ftp://ugc.provides:leeching.here@129.125.108.52:35175		blind	UGC	Racer Leech	15-01-2008

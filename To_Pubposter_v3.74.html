@@ -1,0 +1,368 @@
+﻿<html>
+<head>
+<script type="text/javascript" language="Javascript" src="settings/settings.js"></script>
+<script type="text/javascript" language="Javascript" src="settings/xhconn.js"></script>
+<script type="text/javascript" src="settings/dropdowntabs.js"></script>
+
+<script type="text/javascript" language="Javascript">
+
+//---------------------------------------------| Start Pubposter Setup |-----------------------------------------------------------
+
+var nick = "To"; 			// Your nick
+var team = "UGC";			// Your Team
+var team_ext = "The Underground Council"; // Team extended name
+var boards = new Array( "UGC.js" , "euc.js" , "Boulevard.js" , "nfe.js" , "lum.js" , "jinxed.js" , "sluge.js" , "vocht3.js", "delusional.js", "dupe.js" ); //Insert your board.js file names here
+var recycletime = "7 days"; // Enter standard recycle time, can be changed on PP page.
+var checkmsg = true; 		// Default insert FTP details in message? yes = true, no = false
+var checksubj = false;		// Default insert FTP details in subject? yes = true, no = false
+var checknick = true;		// Default insert Nickname in subject? yes = true, no = false
+var checkteam = true; 		// Default insert Team tag in subject? yes = true, no = false
+
+function addstroxlist(selectbox){
+var strox = new Array(
+	new Array("ftp://YA:manh@811.305.200.375:35175" , "Holanda 811.305.200.375"),		// Enter stro list
+	new Array("ftp://THAI:leech@85.448.598.938:5745" , "Thailand leeching"),			
+	new Array("ftp://feel:free@85.23.65.138:3575" , "Leeching from Portugal"),		
+	new Array("ftp://.whu.who!:plugin!@395.356.456.577:80" , "Leeching Example name")
+					);
+//---------------------------------------------| End Pubposter Setup |-----------------------------------------------------------
+for (var i=0; i < strox.length ;++i) addOption(document.standaard.strotemplate, strox[i][0], strox[i][1]);
+}
+
+var fronttag = "[" + team + "] "; 		// Team tag 
+var release_name = "";
+var stro_loc = "";
+var stro_loc_ext = '';
+var stro_speed = "";
+var rls_size = "";
+var changedmessage = "";
+var typedmessage = "";
+var illuminate_auth_code = ""; //This code is only relevant if you post @ Illuminate. Get the code @ http://illuminate.fdn.hm/getauthcode.php
+var ppver = 'v3.74';
+
+backtag = " [/" + nick + "]";
+titlename = String.fromCharCode( 84,111,32,80,117,98,112,111,115,116,101,114 );
+titleoriginal = titlename + ' ' + ppver;
+
+
+function addOption(selectbox,value,text){
+	var optn = document.createElement("OPTION");
+	optn.text = text;
+	optn.value = value;
+	selectbox.options.add(optn);
+}
+
+
+</script>
+
+<link rel="stylesheet" type="text/css" href="settings/stylesheet.css">
+
+
+
+
+</head>
+
+<body bgcolor="black" text="white" onLoad="init()"><center>
+<form name="standaard">
+
+
+<span class="to">
+
+<b style="font-size:large"><u><script type="text/javascript" language="Javascript">document.write(titlename)</script></u></b>
+
+<b><script type="text/javascript" language="Javascript">document.write(ppver)</script></b>
+
+<br>
+<br>
+<br>
+<br>
+</span>
+<table width="70%" class="a">
+  <tr>
+    <td align="right" style="width: 9%; height: 25px;">
+	<b class="a">Subject: </b>
+    </td>
+    <td align="left" style="width: 100%; height: 25px; vertical-align:middle">
+    
+	<input type="text" name="subject" value="" size="80" maxlength="185" class="i2" style="width: 398px;">
+    <input type="checkbox" name="teaminsubj" id="teaminsubjID" checked=checkteam  onclick="getfronttag()">Team
+    <input type="checkbox" name="nickinsubj" id="nickinsubjID" checked=checknick  onclick="SNBoxClicked()">Nick
+    </td>
+  </tr>
+  <tr>
+    <td align="right" style="width: 9%; height: 25px;">
+	<b class="a">Release: </b>
+    </td>
+    <td align="left" style="width: 100%" valign="middle">
+	<input class="i" type="text" name="release" value="" size="80" maxlength="185" onchange="copytosubject()" style="width: 300px; ">
+	<input type="button" value="Clear Release" onclick="limparls()" style="width: 95px; height: 20px; " class="i">
+</td>
+  </tr>
+  <tr>
+    <td align="right" style="width: 9%">
+	<b class="a">Section: </b>
+    </td>
+    <td align="left" valign="middle" style="width: 100%">
+      <select name="section" style=" width: 202px; background-color: lightyellow;" class="i" onchange="putonmsg()">
+			<option value="">Select Section</option>     
+			<option value="0" class=o>Mirror section</option>
+			<option value="apps"> [Mirror] Apps</option>
+			<option value="console"> [Mirror] Console	</option>
+			<option value="dvdr"> [Mirror] DVDR</option>
+			<option value="games"> [Mirror] Games</option>
+			<option value="mixed"> [Mirror] Mixed</option>
+			<option value="movies"> [Mirror] Movies</option>
+			<option value="mp3"> [Mirror] MP3</option>
+			<option value="tv"> [Mirror] TV Rips</option>
+			<option value="xxx"> [Mirror] XXX</option>
+			<option value="submovies"> [Mirror] Subbed Movies</option>
+			<option value="classmovies"> [Mirror] Classic Movies</option>
+			<option value="0" class=o>Racing section</option>
+			<option value="apprace"> [Race] Applications </option>
+			<option value="consolerace"> [Race] Console </option>
+			<option value="dvdrace"> [Race] DVDR </option>
+			<option value="gamrace"> [Race] Games </option>
+			<option value="movrace"> [Race] Movies </option>
+			<option value="mp3race"> [Race] MP3</option>
+			<option value="tvrace"> [Race] TV Rips</option>
+			<option value="xxxrace"> [Race] XXX</option>
+        
+      </select>
+      <b class="a"><input id="sslon" type="checkbox" name="sslon" value="1" onclick="putonmsg()">SSL&nbsp;&nbsp;Recycle:</b>
+      <input type="text" name="recycle" id="recycleID" size="16" class="i" onchange="getRtime()" style="width: 95px" >
+		</td>
+
+  </tr>
+  <tr>
+    <td align="right" style="width: 9%; height: 25px;">
+	<b class="a">Fastsnap: </b>
+    </td>
+    <td align="left" style="width: 100%" valign="middle">
+	<input type="text" name="quicklink" size="100" maxlength="250" OnChange="checkip(this.form)" style="width: 300px;" class="i">
+ <!--<input type="button" value="Add hide tags" onClick="doaddhide()" style="background-color:lightyellow; width: 135px;">-->
+
+	<input type="button" value="Clear Fastsnap" onclick="limpastro()" style=" width: 95px; height: 20px;" class="i">
+    
+	<select name="strotemplate" onchange="selectstro()" style="background-color: lightyellow; width: 200px; text-align:left;" class="i">
+        <option value="">Select Fastsnap</option>
+    </select>
+    
+</td>
+
+  </tr>
+  <tr>
+<td style="text-align:right; width: 9%;">
+<b class="a">Details: </b></td>
+
+<td colspan="1" style="width: 15%; height: 25px;" valign="middle" >
+<div id="glowmenu" class="glowingtabs" style="width: 300px" >
+<ul>
+<li><a href="#" title="FTP Location" rel="dropmenu1_d" ><span>FTP Location</span></a></li>
+<li><a href="#" title="FTP Speed" rel="dropmenu2_d"><span>FTP Speed</span></a></li>
+<li><a href="#" title="Release Size" rel="dropmenu3_d"><span>Release Size</span></a></li>
+</ul>
+</div>
+
+<!--1st drop down menu -->                                                   
+<div id="dropmenu1_d" class="dropmenudiv_d" style="width:354px">
+
+
+<!--  onmouseover="this.style.background='fff8d0'" onmouseout="this.style.background='ffffff'"  -->
+	<div class="wrapper">
+	<ul>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/at.gif">&nbsp;<input id="AT" type="radio" name="radiolocgroup" value="Austria" onclick="getloc()"><label for="AT"> Austria </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/be.gif">&nbsp;<input id="BE" type="radio" name="radiolocgroup" value="Belgium" onclick="getloc()"><label for="BE"> Belgium </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/br.gif">&nbsp;<input id="BR" type="radio" name="radiolocgroup" value="Brazil" onclick="getloc()"><label for="BR"> Brazil </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/ca.gif">&nbsp;<input id="CA" type="radio" name="radiolocgroup" value="Canada" onclick="getloc()"><label for="CA"> Canada </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/ch.gif">&nbsp;<input id="CH" type="radio" name="radiolocgroup" value="Switzerland" onclick="getloc()"><label for="CH"> Switzerland </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/cz.gif">&nbsp;<input id="CZ" type="radio" name="radiolocgroup" value="Czech Republic" onclick="getloc()"><label for="CZ"> Czech Republic </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/de.gif">&nbsp;<input id="DE" type="radio" name="radiolocgroup" value="Germany" onclick="getloc()"><label for="DE"> Germany </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/dk.gif">&nbsp;<input id="DK" type="radio" name="radiolocgroup" value="Denmark" onclick="getloc()"><label for="DK"> Denmark </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/es.gif">&nbsp;<input id="ES" type="radio" name="radiolocgroup" value="Spain" onclick="getloc()"><label for="ES"> Spain </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/gr.gif">&nbsp;<input id="GR" type="radio" name="radiolocgroup" value="Greece" onclick="getloc()"><label for="GR"> Greece </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/hr.gif">&nbsp;<input id="HR" type="radio" name="radiolocgroup" value="Croatia" onclick="getloc()"><label for="HR"> Croatia </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/hu.gif">&nbsp;<input id="HU" type="radio" name="radiolocgroup" value="Hungary" onclick="getloc()"><label for="HU"> Hungary </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/fr.gif">&nbsp;<input id="FR" type="radio" name="radiolocgroup" value="France" onclick="getloc()"><label for="FR"> France </label></a></li>
+	</ul>
+	</div>
+
+	<div class="wrapper">
+	<ul value="1">
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/it.gif">&nbsp;<input id="IT" type="radio" name="radiolocgroup" value="Italy" onclick="getloc()"><label for="IT"> Italy </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/kr.gif">&nbsp;<input id="KR" type="radio" name="radiolocgroup" value="Korea" onclick="getloc()"><label for="KR"> Korea </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/nl.gif">&nbsp;<input id="NL" type="radio" name="radiolocgroup" value="Netherlands" onclick="getloc()"><label for="NL"> Netherlands </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/no.gif">&nbsp;<input id="NO" type="radio" name="radiolocgroup" value="Norway" onclick="getloc()"><label for="NO"> Norway </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/pl.gif">&nbsp;<input id="PL" type="radio" name="radiolocgroup" value="Poland" onclick="getloc()"><label for="PL"> Poland </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/pt.gif">&nbsp;<input id="PT" type="radio" name="radiolocgroup" value="Portugal" onclick="getloc()"><label for="PT"> Portugal </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/rs.gif">&nbsp;<input id="RS" type="radio" name="radiolocgroup" value="Serbia & Montenegro" onclick="getloc()"><label for="RS"> Serbia Montenegro </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/se.gif">&nbsp;<input id="SE" type="radio" name="radiolocgroup" value="Sweden" onclick="getloc()"><label for="SE"> Sweden </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/si.gif">&nbsp;<input id="SI" type="radio" name="radiolocgroup" value="Slovenia" onclick="getloc()"><label for="SI"> Slovenia </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/sk.gif">&nbsp;<input id="SK" type="radio" name="radiolocgroup" value="Slovakia" onclick="getloc()"><label for="SK"> Slovakia </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/gb.gif">&nbsp;<input id="UK" type="radio" name="radiolocgroup" value="United Kingdom" onclick="getloc()"><label for="UK"> United Kingdom </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/us.gif">&nbsp;<input id="US" type="radio" name="radiolocgroup" value="United States" onclick="getloc()"><label for="US"> United States </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/unn.gif">&nbsp;<input id="OTR" type="radio" name="radiolocgroup" value="Other" onclick="getloc()"><label for="OTR"> Other </label></a></li>
+	</ul>
+	</div>
+
+</div>
+<!--End 1st drop down menu -->
+
+<!--Start 2nd drop down menu -->
+<div id="dropmenu2_d" class="dropmenudiv_d" style="width:185px">
+
+	<div class="wrapper">
+	<ul>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/cnt.gif">&nbsp;<input id="50MBit" type="radio" name="radiospeedgroup" value="50MBit" onclick="getspeed()"><label for="50MBit"> 50MBit </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/cnt.gif">&nbsp;<input id="100MBit" type="radio" name="radiospeedgroup" value="100MBit" onclick="getspeed()"><label for="100MBit"> 100MBit </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/cnt.gif">&nbsp;<input id="150MBit" type="radio" name="radiospeedgroup" value="150MBit" onclick="getspeed()"><label for="150MBit"> 150MBit </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/cnt.gif">&nbsp;<input id="1GBit" type="radio" name="radiospeedgroup" value="1GBit" onclick="getspeed()"><label for="1GBit"> 1GBit </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/cnt.gif">&nbsp;<input id="2GBit" type="radio" name="radiospeedgroup" value="2GBit" onclick="getspeed()"><label for="2GBit"> 2GBit </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'">&nbsp;<img src="img/cnt.gif">&nbsp;<input id="Otherspeed" type="radio" name="radiospeedgroup" value="Other Speed" onclick="getspeed()"><label for="Otherspeed"> Other Speed </label></a></li>
+	</ul>
+	</div>
+
+</div>
+<!--End 2nd drop down menu -->
+
+
+<!--Start 3nd drop down menu -->
+<div id="dropmenu3_d" class="dropmenudiv_d" style="width:185px;">
+
+
+	<div class="wrapper">
+	<ul>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'"><img src="img/rar.gif"><input id="1CD" type="radio" name="radiosizegroup" value="1CD" onclick="getsize()"><label for="1CD"> 1CD </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'"><img src="img/rar.gif"><input id="2CD" type="radio" name="radiosizegroup" value="2CD" onclick="getsize()"><label for="2CD"> 2CD </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'"><img src="img/rar.gif"><input id="DVD-4" type="radio" name="radiosizegroup" value="DVD-4" onclick="getsize()"><label for="DVD-4"> DVD-4 </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'"><img src="img/rar.gif"><input id="DVD-9" type="radio" name="radiosizegroup" value="DVD-9" onclick="getsize()"><label for="DVD-9"> DVD-9 </label></a></li>
+		<li><a onmouseover="this.style.background='#FFEC9F'" onmouseout="this.style.background='transparent'"><img src="img/rar.gif"><input id="Othersize" type="radio" name="radiosizegroup" value="Other Size" onclick="getsize()"><label for="Othersize"> Other Size </label></a></li>
+	</ul>
+	</div>
+</div>
+<!--End 3nd drop down menu -->
+
+<input type="checkbox" name="detailsinmsg" id="detailsinmsgID" onclick="putonmsg()">Message&nbsp;&nbsp;
+<input type="checkbox" name="detailsinsubj" id="detailsinsubjID" onclick="SNBoxClicked()">Subject&nbsp;&nbsp;
+<input type="button" value="Reset Details" onclick="resetdetails()" style=" width: 100px; height: 20px;" class="i">
+</td>
+</tr>
+
+</table>
+
+<table width="80%" style="display:none"> <!-- HOHOHO hiden table -->
+  <tr>
+    <td style="width: 15%; text-align: right;">FTP://</td>
+    <td style="width: 7px"><input disabled type="text" name="login" value="" size="15" maxlength="100" style="background-color: #F0F0F0"></td>
+    <td>:</td>
+    <td style="width: 13px"><input disabled type="password" name="pass" value="" size="15" maxlength="100" style="background-color: #F0F0F0"></td>
+    <td style="width: 10px"><b>@</b></td>
+    <td style="width: 104px"><input disabled type="text" name="ip" value="" size="16" maxlength="100" style="background-color: #F0F0F0"></td>
+    <td>:</td>
+    <td style="width: 9px"><input disabled type="text" name="port" value="" size="4" maxlength="5" style="background-color: #F0F0F0"></td>
+    <td>/</td>
+    <td><input type="text" disabled name="path" value="" size="35" maxlength="200" style="background-color: #F0F0F0; width: 125px;"></td>
+  </tr>
+</table>
+
+
+<table style="width: 70%" class="a">
+  <tr>
+    <td align="left" colspan="2" style="width: 100%; height: 20px;">
+
+
+<b>Message: </b>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" style="width: 100%">
+	<textarea id="messageid" name="message" wrap="virtual" onchange="storemessage()" style=" scrollbar-base-color: lightyellow; scrollbar-arrow-color: black; scrollbar-DarkShadow-Color: lightyellow; width: 800px; height: 200px; "  class="i">
+	</textarea>
+    </td>
+  </tr>
+	<tr>
+		<td style="text-align: right; ">
+		<form method="post">
+		<span class="a">
+		<div id="allbuttondiv" style="text-align: left" class="a">
+<input class="i" name="All_Boards" type="button" value="Post to All" onclick="clickall()" style="background-color:lightyellow; width: 100px;">
+		</div>
+		</span>
+		</form>
+		</td>
+		
+		<td valign="top" align="right" >
+		<input type="button" value="Reset All" onclick="limpate()" style="width: 100px;" class="i">
+		</td>
+	</tr>
+	</form>
+</table>
+
+
+<div id="boards_js_styled"></div>
+
+
+<table id="board_js" style="display:none">
+<tr>
+<script type="text/javascript" language="Javascript">
+for (i=0; i<boards.length; i++) 
+  document.write( " <td> <script type='text/javascript' src=' boards/" + boards[i] + " '><\/script> <\/td>"  );
+</script>
+
+</tr>
+</table>
+
+
+<script language="Javascript"> // late script loading
+var myConn = new XHConn();
+var outsig = function (oXML) {
+ document.standaard.message.value = oXML.responseText;
+ originalmessage=oXML.responseText;
+ changedmessage=originalmessage;
+//doitnow();			
+};
+myConn.connect('signature.txt', 'GET', '', outsig);
+details_msg = '';
+var myConn2 = new XHConn();
+var outsig2 = function (oXML) {
+details_msg = oXML.responseText;
+doitnow();
+};
+myConn2.connect('settings/details_msg.txt', 'GET', '', outsig2);
+
+
+
+addstroxlist(); initInputHighlightScript();
+
+  document.standaard.recycleID.value = recycletime;			
+  document.standaard.detailsinmsgID.checked = checkmsg;		//
+  document.standaard.detailsinsubjID.checked = checksubj;	// Set checkboxes
+  document.standaard.nickinsubjID.checked = checknick;		//
+  document.standaard.teaminsubjID.checked= checkteam;		//
+  document.write("<title>" + titleoriginal + "</title>");
+
+//SYNTAX: tabdropdown.init("menu_id", [integer OR "auto"])
+tabdropdown.init("glowmenu", "auto");
+doitnow(); //again!!!
+function doitnow(){
+
+if (document.standaard.detailsinmsgID.checked) document.standaard.message.value = details_msg + originalmessage;
+}
+
+</script>
+
+<br>
+<br>
+
+
+
+&nbsp;<br>
+<br>
+</center>
+<p align="right" class="a">
+<a href="http://cgu.mooo.com/applyform.php">
+<img alt="Join UGC!" src="img/apply.jpg" width="128" height="68"></a></p>
+<p align="right" class="a">
+Save Energy pubposter mod by To @ UGC derived from
+<a href="mailto:triplcixx@dragonboards.net">TripLcixx</a> pubposter check <a href="http://users.pandora.be/triplcixx/pubposter">here</a>!</p>
+</body>
+</html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
